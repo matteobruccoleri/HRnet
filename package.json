@@ -1,48 +1,56 @@
 {
   "name": "smart-modal-hrnet",
+  "private": false,
   "version": "1.0.0",
-  "description": "Reusable React modal/toast component with fade+scale animations, backdrop and Escape handling (HRnet project).",
-  "keywords": ["react", "modal", "dialog", "toast", "overlay", "hrnet"],
+  "type": "module",
+  "description": "React modal/toast component with fade+scale animation, backdrop click, Escape handling and flexible positioning (styled-components).",
+  "keywords": [
+    "react",
+    "modal",
+    "dialog",
+    "toast",
+    "styled-components",
+    "overlay",
+    "hrnet"
+  ],
   "author": "HRnet Team",
   "license": "MIT",
   "engines": {
     "node": ">=18"
   },
 
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-
+  "main": "./dist/smart-modal-hrnet.cjs",
+  "module": "./dist/smart-modal-hrnet.es.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": "./dist/smart-modal-hrnet.es.js",
+      "require": "./dist/smart-modal-hrnet.cjs"
     }
   },
 
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
 
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "clean": "rm -rf dist",
-    "prepare": "npm run build"
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
   },
 
   "peerDependencies": {
-    "react": ">=17",
-    "react-dom": ">=17",
-    "styled-components": ">=6"
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "styled-components": "^6.0.0"
   },
 
   "devDependencies": {
-    "@types/react": "^19.1.9",
-    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^4.7.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "styled-components": "^6.1.19",
-    "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "vite": "^7.1.0"
   }
 }

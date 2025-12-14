@@ -1,18 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path from "path";
 
 // Configuration Vite en mode librairie pour packager le composant SmartModal.
 export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
-      entry: "src/index.js",
+      entry: path.resolve(__dirname, "src/index.js"),
       name: "SmartModal",
-      fileName: (format) =>
-        (format === "es"
-          ? "smart-modal-hrnet.es.js"
-          : "smart-modal-hrnet.cjs"),
       formats: ["es", "cjs"],
+      fileName: (format) =>
+        format === "es"
+          ? "smart-modal-hrnet.es.js"
+          : "smart-modal-hrnet.cjs"
     },
     copyPublicDir: false,
     emptyOutDir: true,
@@ -23,9 +24,9 @@ export default defineConfig({
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
-          "styled-components": "styled",
-        },
-      },
-    },
-  },
+          "styled-components": "styled"
+        }
+      }
+    }
+  }
 });
