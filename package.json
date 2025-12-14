@@ -1,24 +1,52 @@
 {
-  "name": "hrnet",
-  "private": true,
-  "version": "0.0.0",
+  "name": "smart-modal-hrnet",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
+  "description": "Modal React accessible avec animations, backdrop et gestion du clavier (Escape), propulsée par styled-components.",
+  "keywords": [
+    "react",
+    "modal",
+    "dialog",
+    "styled-components",
+    "overlay",
+    "hrnet"
+  ],
+  "author": "HRnet Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./dist/smart-modal-hrnet.cjs",
+  "module": "./dist/smart-modal-hrnet.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/smart-modal-hrnet.es.js",
+      "require": "./dist/smart-modal-hrnet.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "src/components/SmartModal.jsx",
+    "src/index.js",
+    "src/assets/close.svg",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "@reduxjs/toolkit": "^2.8.2",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-redux": "^9.2.0",
-    "react-router-dom": "^7.8.2",
-    "styled-components": "^6.1.19"
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "styled-components": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
+    "@reduxjs/toolkit": "^2.8.2",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.7.0",
@@ -26,6 +54,11 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.8.2",
+    "styled-components": "^6.1.19",
     "vite": "^7.1.0"
   }
 }
