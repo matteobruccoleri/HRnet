@@ -2,9 +2,10 @@ import { useState } from "react";
 import Input from "./atoms/Input";
 import Dropdown from "./atoms/Dropdown";
 import AddressFieldset from "./molecules/AddressFieldset";
-import Modal from "./Modal";
+import Modal from "./SmartModal";
 import Button from "./atoms/Button";
 import { useEmployeesDispatch } from "../state/EmployeesStore";
+import icon from "../assets/user.svg";
 import styled from "styled-components";
 
 const DEPARTMENTS = [
@@ -67,19 +68,23 @@ export default function EmployeeForm() {
         <Button type="submit">Save</Button>
       </Form>
 
-      <Modal open={open} onOpenChange={setOpen} title="Confirmation">
-        Employee Created!
+      <Modal open={open} onOpenChange={setOpen}>
+        <Message>
+          <Icon src={icon} alt="User icon" />
+          Employee Created!
+        </Message>
       </Modal>
     </>
   );
 }
 
 const Form = styled.form`
+  background-color: #fff;
   border-radius: 15px;
   border: 1px solid #ccc;
   padding: 15px;
   width: 100%;
-  box-shadow: 0px 0px 15px 10px #94949417;
+  box-shadow: 0px 0px 25px 0px rgba(0, 76, 158, 0.1);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -88,4 +93,18 @@ const Form = styled.form`
   @media (min-width: 425px) {
     width: 400px;
   }
+`;
+
+const Message = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: #0000007c;
+  line-height: 100%;
+`;
+
+const Icon = styled.img`
+  width: 20px;
+  height: 20px;
 `;

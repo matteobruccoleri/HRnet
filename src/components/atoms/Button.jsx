@@ -6,32 +6,27 @@ const StyledButton = styled.button`
   justify-content: center;
   gap: 6px;
   width: 100%;
-  padding: 10px 16px;
-  border-radius: 8px;
+  padding: 15px 25px;
+  border-radius: 10px;
   border: none;
   font-weight: 600;
   cursor: pointer;
-
-  background: ${({ variant }) =>
-    variant === "secondary" ? "#f2f4f8" : "#efefef"};
-    color: ${({ variant }) => (variant === "secondary" ? "#1f2d3d" : "#5A6F07")};
-    border: 1px solid #5A6F07;
-
-    transition: all 0.15s ease;
+  background: #1b453d;
+  color: #fff;
+  transition: all 0.2s ease;
+  transform: translateY(0);
 
     &:hover {
-      background-color: #ebebeb;
+      background-color: #046961;
+      transform: translateY(-2px);
     }
 
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-  }
+    &:disabled {
+      background-color: #e3e3e3d1;
+      color: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
 `;
 
 function Button({ children, variant = "primary", ...props }) {

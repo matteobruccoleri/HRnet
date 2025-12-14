@@ -10,5 +10,5 @@ const StyledTitle = styled.h1`
   margin: 0;
   font-size: 1.75rem;
   font-weight: 500;
-  color: #939b6b;
+  color: #046961;
 `;

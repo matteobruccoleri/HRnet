@@ -63,7 +63,7 @@ function EmployeeList() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
+    <StyledEmployeeList>
       <Title>Current Employees</Title>
 
       <div
@@ -191,6 +191,7 @@ function EmployeeList() {
                 onClick={() => isNumber && setPage(item)}
                 style={{
                   fontWeight: isActive ? "bold" : "normal",
+                  color: isActive ? "#3b8e00" : "#ccc",
                   cursor: isNumber ? "pointer" : "default",
                   padding: "2px 6px",
                   userSelect: "none",
@@ -212,14 +213,19 @@ function EmployeeList() {
           </Button>
         </div>
       </div>
-    </div>
+    </StyledEmployeeList>
   );
 }
 
 export default EmployeeList;
 
+const StyledEmployeeList = styled.div `
+  width: 100%;
+`
+
 const StyledTable = styled.table`
   border: 1px solid #00000044;
   border-radius: 12px;
   padding: 10px;
+  width: 100%;
 `;

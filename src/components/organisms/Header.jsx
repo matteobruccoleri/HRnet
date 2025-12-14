@@ -23,33 +23,60 @@ function Header() {
   );
 }
 
+export default Header;
+
 const StyledHeader = styled.header`
-  padding: 10px 20px;
+  position: sticky;
+  z-index: 999;
+  top: 0;
+  background-color: #f9f9f9;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #5A6F07;
-  background-color: #efefef;
+  padding: 15px;
+  box-shadow: 0px -10px 25px 0px rgba(0, 76, 158, 0.3);
+
+  a {
+    font-size: 14px;
+    color: #1b453d;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (min-width: 425px) {
+    padding: 15px 30px;
+    a {
+      font-size: 22px;
+    }
+  }
 `;
 
 const Logo = styled.img`
-  height: 60px;
-`;
-
-const Title = styled.h1`
-  font-size: 16px;
-  margin: 0;
-  color: #5A6F09;
+  height: 40px;
 `;
 
 const Nav = styled.nav`
   a {
-    color: #5b6f09d8;
+    color: #f9f9f9;
     font-weight: 500;
+    border-radius: 10px;
+    background-color: #1b453d;
+    padding: 10px 20px;
+    font-size: 12px;
+    transition: 0.2s ease-out;
+    transform: translateY(0px);
+
+    @media (min-width: 425px) {
+      font-size: 14px;
+    }
   }
   a:hover {
-    color: #5b6f09ff;
+    transform: translateY(-2px);
+    background-color: #046961;
   }
 `;
 
-export default Header;
+

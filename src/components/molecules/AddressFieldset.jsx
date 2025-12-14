@@ -24,5 +24,7 @@ export default function AddressFieldset() {
 }
 
 const StyledFieldSet = styled.fieldset`
+  border: 1px solid #cbcbcb;
+  border-radius: 8px;
   width: 100%; 
 `

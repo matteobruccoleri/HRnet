@@ -16,11 +16,12 @@ export default function Home() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
-  width: 100%;
 
   @media (min-width: 425px) {
-    width: auto;
+    width: 100%;
+    margin: 75px auto;
   }
   
 `
