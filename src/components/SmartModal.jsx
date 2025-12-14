@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import styled from "styled-components";
 import closeIcon from "../assets/close.svg";
 
+// Map des différentes positions vers les règles de flex correspondantes.
 const POSITION_STYLES = {
   center: { align: "center", justify: "center" },
   "top-left": { align: "flex-start", justify: "flex-start" },
@@ -13,6 +14,23 @@ const POSITION_STYLES = {
   "bottom-center": { align: "flex-end", justify: "center" },
 };
 
+/**
+ * SmartModal affiche une modale React portée par styled-components avec animation,
+ * gestion du clavier (Escape) et du clic sur le backdrop.
+ *
+ * @param {boolean} open - Etat de visibilité contrôlé depuis le parent.
+ * @param {(isOpen: boolean) => void} onOpenChange - Callback de synchro parent pour ouvrir/fermer.
+ * @param {() => void} onClose - Callback déclenché lors d'une fermeture (clic backdrop, bouton, Escape).
+ * @param {"center"|"top-left"|"top-right"|"bottom-left"|"bottom-right"|"top-center"|"bottom-center"} position - Position de la modale.
+ * @param {boolean} showBackdrop - Affiche ou non le backdrop semi-transparent.
+ * @param {boolean} closeOnBackdropClick - Ferme la modale lorsqu'on clique sur le backdrop.
+ * @param {boolean} closeOnEsc - Active la fermeture via la touche Escape.
+ * @param {boolean} showCloseButton - Affiche le bouton de fermeture en haut à droite.
+ * @param {string} rootClassName - Classe additionnelle pour le conteneur racine (overlay).
+ * @param {string} contentClassName - Classe additionnelle pour le contenu de la modale.
+ * @param {string} backdropClassName - Classe additionnelle pour le backdrop.
+ * @param {React.ReactNode} children - Contenu à afficher dans la modale.
+ */
 function SmartModal({
   open,
   onOpenChange,
