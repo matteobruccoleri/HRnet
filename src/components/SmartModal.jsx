@@ -1,9 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import closeIcon from "../assets/close.svg";
 
-// Map des différentes positions vers les règles de flex correspondantes.
+// SVG inline → évite de dépendre d’un fichier importé (meilleur pour npm)
+const CloseSvg = (props) => (
+  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" {...props}>
+    <path
+      d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+// Map des positions -> flex align/justify
 const POSITION_STYLES = {
   center: { align: "center", justify: "center" },
   "top-left": { align: "flex-start", justify: "flex-start" },
@@ -11,27 +20,31 @@ const POSITION_STYLES = {
   "bottom-left": { align: "flex-end", justify: "flex-start" },
   "bottom-right": { align: "flex-end", justify: "flex-end" },
   "top-center": { align: "flex-start", justify: "center" },
-  "bottom-center": { align: "flex-end", justify: "center" },
+  "bottom-center": { align: "flex-end", justify: "center" }
 };
 
 /**
- * SmartModal affiche une modale React portée par styled-components avec animation,
- * gestion du clavier (Escape) et du clic sur le backdrop.
+ * SmartModal affiche une modale/toast React basée sur styled-components.
+ * - Contrôlée via `open`
+ * - Animation fade + scale (0.8 -> 1 à l’ouverture ; 1 -> 0.8 à la fermeture)
+ * - Fermeture via Escape, clic backdrop, bouton close (optionnel)
+ * - Position configurable (center, bottom-right, etc.)
  *
- * @param {boolean} open - Etat de visibilité contrôlé depuis le parent.
- * @param {(isOpen: boolean) => void} onOpenChange - Callback de synchro parent pour ouvrir/fermer.
- * @param {() => void} onClose - Callback déclenché lors d'une fermeture (clic backdrop, bouton, Escape).
- * @param {"center"|"top-left"|"top-right"|"bottom-left"|"bottom-right"|"top-center"|"bottom-center"} position - Position de la modale.
- * @param {boolean} showBackdrop - Affiche ou non le backdrop semi-transparent.
- * @param {boolean} closeOnBackdropClick - Ferme la modale lorsqu'on clique sur le backdrop.
- * @param {boolean} closeOnEsc - Active la fermeture via la touche Escape.
- * @param {boolean} showCloseButton - Affiche le bouton de fermeture en haut à droite.
- * @param {string} rootClassName - Classe additionnelle pour le conteneur racine (overlay).
- * @param {string} contentClassName - Classe additionnelle pour le contenu de la modale.
- * @param {string} backdropClassName - Classe additionnelle pour le backdrop.
- * @param {React.ReactNode} children - Contenu à afficher dans la modale.
+ * @param {Object} props
+ * @param {boolean} props.open - État contrôlé d'ouverture (true = visible).
+ * @param {(isOpen: boolean) => void} [props.onOpenChange] - Callback pour synchroniser l'état avec le parent.
+ * @param {() => void} [props.onClose] - Callback déclenché lors d'une fermeture.
+ * @param {"center"|"top-left"|"top-right"|"bottom-left"|"bottom-right"|"top-center"|"bottom-center"} [props.position="center"] - Position de la modale.
+ * @param {boolean} [props.showBackdrop=true] - Affiche un backdrop (modal) ou non (toast).
+ * @param {boolean} [props.closeOnBackdropClick=true] - Ferme au clic backdrop (si showBackdrop=true).
+ * @param {boolean} [props.closeOnEsc=true] - Ferme avec la touche Escape.
+ * @param {boolean} [props.showCloseButton=true] - Affiche le bouton de fermeture.
+ * @param {string} [props.rootClassName=""] - Classe additionnelle pour le root overlay.
+ * @param {string} [props.contentClassName=""] - Classe additionnelle pour le contenu.
+ * @param {string} [props.backdropClassName=""] - Classe additionnelle pour le backdrop.
+ * @param {import("react").ReactNode} props.children - Contenu affiché.
  */
-function SmartModal({
+export function SmartModal({
   open,
   onOpenChange,
   onClose,
@@ -43,7 +56,7 @@ function SmartModal({
   rootClassName = "",
   contentClassName = "",
   backdropClassName = "",
-  children,
+  children
 }) {
   const [isMounted, setIsMounted] = useState(open);
   const [isVisible, setIsVisible] = useState(open);
@@ -58,15 +71,12 @@ function SmartModal({
     onOpenChange?.(false);
   }, [onClose, onOpenChange]);
 
-  // Gérer l'ouverture / fermeture avec animation
+  // Ouverture / fermeture avec animation
   useEffect(() => {
     if (open) {
       setIsMounted(true);
-      // Laisser une frame pour permettre aux transitions CSS de se déclencher
       if (typeof window !== "undefined") {
-        requestAnimationFrame(() => {
-          setIsVisible(true);
-        });
+        requestAnimationFrame(() => setIsVisible(true));
       } else {
         setIsVisible(true);
       }
@@ -75,56 +85,42 @@ function SmartModal({
     }
   }, [open]);
 
-  // Gérer la touche Escape
+  // Escape
   useEffect(() => {
     if (!open || !closeOnEsc) return;
     if (typeof document === "undefined") return;
 
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        handleClose();
-      }
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") handleClose();
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [open, closeOnEsc, handleClose]);
 
-  // Quand l'animation de fade/scale est terminée, on démonte si besoin
-  const handleContentTransitionEnd = () => {
-    if (!open) {
-      setIsMounted(false);
-    }
+  // À la fin de l’animation de fermeture, on démonte
+  const handleTransitionEnd = () => {
+    if (!open) setIsMounted(false);
   };
 
   if (!isMounted) return null;
   if (typeof document === "undefined") return null; // SSR safety
 
-  const rootClasses = [
-    "sm-modal-root",
-    isVisible ? "sm-modal-root--visible" : "",
-    rootClassName,
-  ]
+  const rootClasses = ["sm-modal-root", isVisible ? "sm-modal-root--visible" : "", rootClassName]
     .filter(Boolean)
     .join(" ");
 
-  const contentClasses = [
-    "sm-modal-content",
-    `sm-modal-content--${position}`,
-    contentClassName,
-  ]
+  const contentClasses = ["sm-modal-content", `sm-modal-content--${position}`, contentClassName]
     .filter(Boolean)
     .join(" ");
 
-  const backdropClasses = ["sm-modal-backdrop", backdropClassName]
-    .filter(Boolean)
-    .join(" ");
+  const backdropClasses = ["sm-modal-backdrop", backdropClassName].filter(Boolean).join(" ");
 
   const handleRootClick = () => {
-    if (showBackdrop && closeOnBackdropClick) {
-      handleClose();
-    }
+    if (showBackdrop && closeOnBackdropClick) handleClose();
   };
+
+  const isToast = !showBackdrop;
 
   const modal = (
     <Root
@@ -134,37 +130,34 @@ function SmartModal({
       $visible={isVisible}
       onClick={handleRootClick}
     >
-      {showBackdrop && (
-        <Backdrop
-          className={backdropClasses}
-          $visible={isVisible}
-        />
-      )}
+      {showBackdrop && <Backdrop className={backdropClasses} $visible={isVisible} />}
 
       <Content
         className={contentClasses}
         $visible={isVisible}
         onClick={(e) => e.stopPropagation()}
-        onTransitionEnd={handleContentTransitionEnd}
-        role={showBackdrop ? "dialog" : "status"}
-        aria-modal={showBackdrop || undefined}
+        onTransitionEnd={handleTransitionEnd}
+        role={isToast ? "status" : "dialog"}
+        aria-modal={isToast ? undefined : true}
+        aria-live={isToast ? "polite" : undefined}
       >
         {showCloseButton && (
-          <CloseButton
-            type="button"
-            aria-label="Close modal"
-            onClick={handleClose}
-          >
-          <CloseIcon src={closeIcon} alt="Close modal" />
+          <CloseButton type="button" aria-label="Close modal" onClick={handleClose}>
+            <CloseIcon aria-hidden="true">
+              <CloseSvg />
+            </CloseIcon>
           </CloseButton>
         )}
-        <ContentText>{children}</ContentText>
+
+        <ContentBody>{children}</ContentBody>
       </Content>
     </Root>
   );
 
   return createPortal(modal, document.body);
 }
+
+// styled-components
 
 const Root = styled.div`
   position: fixed;
@@ -174,9 +167,10 @@ const Root = styled.div`
   display: flex;
   align-items: ${({ $align }) => $align};
   justify-content: ${({ $justify }) => $justify};
+
   pointer-events: ${({ $visible }) => ($visible ? "auto" : "none")};
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transition: opacity 300ms ease;
+  transition: opacity 200ms ease;
 `;
 
 const Backdrop = styled.div`
@@ -184,7 +178,7 @@ const Backdrop = styled.div`
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transition: opacity 300ms ease;
+  transition: opacity 200ms ease;
 `;
 
 const Content = styled.div`
@@ -196,14 +190,13 @@ const Content = styled.div`
   padding: 10px;
   box-shadow: 0 20px 50px rgba(5, 2, 2, 0.2);
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transform: translateY(${({ $visible }) => ($visible ? "0" : "8px")})
-  scale(${({ $visible }) => ($visible ? 1 : 0.80)});
-  transition: opacity 150ms ease, transform 150ms ease;
+  transform: scale(${({ $visible }) => ($visible ? 1 : 0.8)});
+  transition: opacity 200ms ease, transform 200ms ease;
 `;
 
-const ContentText = styled.div`
+const ContentBody = styled.div`
   padding: 5px;
-`
+`;
 
 const CloseButton = styled.button`
   margin-left: auto;
@@ -223,9 +216,11 @@ const CloseButton = styled.button`
   }
 `;
 
-const CloseIcon = styled.img`
+const CloseIcon = styled.span`
+  display: inline-flex;
   width: 20px;
   height: 20px;
+  color: #111;
 `;
 
 export default SmartModal;
