@@ -26,6 +26,6 @@ const Field = styled.div`
   select {
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 `;

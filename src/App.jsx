@@ -19,6 +19,7 @@ function App() {
 const Main = styled.main `
   background-color: #F7FBFF;
   width: 100%;
+  padding: 5%;
 `
 
 export default App

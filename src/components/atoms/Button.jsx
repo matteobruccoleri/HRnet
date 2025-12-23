@@ -29,9 +29,9 @@ const StyledButton = styled.button`
     }
 `;
 
-function Button({ children, variant = "primary", ...props }) {
+function Button({ children, ...props }) {
   return (
-    <StyledButton variant={variant} {...props}>
+    <StyledButton {...props}>
       {children}
     </StyledButton>
   );
