@@ -77,6 +77,8 @@ function EmployeeList() {
         <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
           Show{" "}
           <select
+            id="page-size"
+            name="page-size"
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value));
@@ -95,6 +97,7 @@ function EmployeeList() {
         <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
           Search:{" "}
           <Input
+            id="employee-search"
             type="search"
             placeholder="Search employees…"
             value={search}
@@ -107,52 +110,54 @@ function EmployeeList() {
         </label>
       </div>
 
-      <StyledTable>
-        <thead>
-          <tr>
-            {COLUMNS.map((c) => (
-              <th
-                key={c.key}
-                onClick={() => toggleSort(c.key)}
-                style={{
-                  cursor: "pointer",
-                  userSelect: "none",
-                  textAlign: "left",
-                  padding: "8px",
-                  borderBottom: "1px solid #ccc",
-                }}
-              >
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                  <strong>{c.label}</strong>
-                  <span style={{ opacity: 0.6 }}>{sortIndicator(c.key)}</span>
-                </span>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {pageRows.length === 0 ? (
+      <TableContainer>
+        <StyledTable>
+          <thead>
             <tr>
-              <td colSpan={COLUMNS.length} style={{ padding: 12, textAlign: "center" }}>
-                No data available in table
-              </td>
+              {COLUMNS.map((c) => (
+                <th
+                  key={c.key}
+                  onClick={() => toggleSort(c.key)}
+                  style={{
+                    cursor: "pointer",
+                    userSelect: "none",
+                    textAlign: "left",
+                    padding: "8px",
+                    borderBottom: "1px solid #ccc",
+                  }}
+                >
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                    <strong>{c.label}</strong>
+                    <span style={{ opacity: 0.6 }}>{sortIndicator(c.key)}</span>
+                  </span>
+                </th>
+              ))}
             </tr>
-          ) : (
-            pageRows.map((e, i) => (
-              <tr key={e.id ?? i}>
-                {COLUMNS.map((c) => (
-                  <td
-                    key={c.key}
-                    style={{ padding: "8px", borderBottom: "1px solid #eee" }}
-                  >
-                    {e[c.key]}
-                  </td>
-                ))}
+          </thead>
+          <tbody>
+            {pageRows.length === 0 ? (
+              <tr>
+                <td colSpan={COLUMNS.length} style={{ padding: 12, textAlign: "center" }}>
+                  No data available in table
+                </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </StyledTable>
+            ) : (
+              pageRows.map((e, i) => (
+                <tr key={e.id ?? i}>
+                  {COLUMNS.map((c) => (
+                    <td
+                      key={c.key}
+                      style={{ padding: "8px", borderBottom: "1px solid #eee" }}
+                    >
+                      {e[c.key]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </StyledTable>
+      </TableContainer>
 
       <div
         style={{
@@ -177,7 +182,6 @@ function EmployeeList() {
             type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            variant="secondary"
           >
             Previous
           </Button>
@@ -207,7 +211,6 @@ function EmployeeList() {
             type="button"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            variant="secondary"
           >
             Next
           </Button>
@@ -219,13 +222,22 @@ function EmployeeList() {
 
 export default EmployeeList;
 
-const StyledEmployeeList = styled.div `
+const StyledEmployeeList = styled.div`
   width: 100%;
-`
+`;
+
+const TableContainer = styled.div`
+  width: 100%;
+
+  @media (max-width: 1279px) {
+    overflow-x: scroll;
+  }
+`;
 
 const StyledTable = styled.table`
   border: 1px solid #00000044;
   border-radius: 12px;
   padding: 10px;
   width: 100%;
+  min-width: 800px;
 `;
