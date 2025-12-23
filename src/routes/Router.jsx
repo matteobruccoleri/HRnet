@@ -6,9 +6,9 @@ import EmployeeList from '../pages/EmployeeList'
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />, // layout avec Header + <Outlet />
+    element: <App />,
     children: [
-      { index: true, element: <Home /> },   // équivaut à path: '/'
+      { index: true, element: <Home /> },
       { path: 'employees', element: <EmployeeList /> }
     ],
   },
