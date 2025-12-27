@@ -6,8 +6,8 @@ const StyledButton = styled.button`
   justify-content: center;
   gap: 6px;
   width: 100%;
-  padding: 15px 25px;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 0.5rem;
   border: none;
   font-weight: 600;
   cursor: pointer;
@@ -27,6 +27,9 @@ const StyledButton = styled.button`
       cursor: not-allowed;
       transform: none;
     }
+
+
+
 `;
 
 function Button({ children, ...props }) {
