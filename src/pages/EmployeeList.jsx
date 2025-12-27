@@ -220,7 +220,7 @@ const TableContainer = styled.div`
 
 const StyledTable = styled.table`
   border: 1px solid #00000044;
-  border-radius: O.5rem;
+  border-radius: 0.5rem;
   padding: 10px;
   width: 1280px;
 
