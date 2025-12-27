@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Title from "../components/atoms/Title";
 import styled from "styled-components";
-import Input from "../components/atoms/Input";
+import Search from "../components/molecules/Search";
 import { useEmployees } from "../state/EmployeesStore";
 import { useEmployeesTable } from "../features/useEmployeeTable";
 import Button from "../components/atoms/Button";
@@ -66,16 +66,9 @@ function EmployeeList() {
     <StyledEmployeeList>
       <Title>Current Employees</Title>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: "12px 0 8px",
-        }}
-      >
-        <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          Show{" "}
+      <StyledShowAndSearch>
+        <StyledShow>
+          Show
           <select
             id="page-size"
             name="page-size"
@@ -92,23 +85,17 @@ function EmployeeList() {
             ))}
           </select>{" "}
           entries
-        </label>
+        </StyledShow>
 
-        <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          Search:{" "}
-          <Input
-            id="employee-search"
-            type="search"
-            placeholder="Search employees…"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-            style={{ padding: 6 }}
-          />
-        </label>
-      </div>
+        <Search
+          value={search}
+          placeholder="Search employees…"
+          onChange={(value) => {
+            setSearch(value);
+            setPage(1);
+          }}
+        />
+      </StyledShowAndSearch>
 
       <TableContainer>
         <StyledTable>
@@ -159,14 +146,7 @@ function EmployeeList() {
         </StyledTable>
       </TableContainer>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: 8,
-          alignItems: "center",
-        }}
-      >
+      <StyledPaginationWrapper>
         <div>
           {total === 0
             ? "Showing 0 to 0 of 0 entries"
@@ -177,7 +157,7 @@ function EmployeeList() {
         </div>
 
         {/* --- pagination --- */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <StyledPagination>
           <Button
             type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -214,8 +194,8 @@ function EmployeeList() {
           >
             Next
           </Button>
-        </div>
-      </div>
+        </StyledPagination>
+      </StyledPaginationWrapper>
     </StyledEmployeeList>
   );
 }
@@ -223,21 +203,69 @@ function EmployeeList() {
 export default EmployeeList;
 
 const StyledEmployeeList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 100%;
 `;
 
 const TableContainer = styled.div`
-  width: 100%;
+  scrollbar-width: none;
+  overflow-x: scroll;
 
-  @media (max-width: 1279px) {
-    overflow-x: scroll;
+  @media (min-width: 1280px) {
+    width: 100%;
   }
 `;
 
 const StyledTable = styled.table`
   border: 1px solid #00000044;
-  border-radius: 12px;
+  border-radius: O.5rem;
   padding: 10px;
-  width: 100%;
-  min-width: 800px;
+  width: 1280px;
+
+  @media (min-width: 1280px) {
+    width: 100%;
+  }
 `;
+
+const StyledPaginationWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+`
+const StyledShowAndSearch = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: start;
+  justify-content: space-between;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+`
+
+const StyledShow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;  
+`
+
+const StyledPagination = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;  
+`
