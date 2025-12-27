@@ -49,6 +49,7 @@
     "vite": "^7.1.0"
   },
   "dependencies": {
+    "prop-types": "^15.8.1",
     "react-router-dom": "^7.11.0",
     "smart-modal-hrnet": "^1.0.0"
   }
