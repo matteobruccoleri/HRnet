@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import EmployeeForm from "../components/EmployeeForm";
+import EmployeeForm from "../components/organisms/EmployeeForm";
 import Title from "../components/atoms/Title";
 
 export default function Home() {
@@ -21,7 +21,6 @@ const Container = styled.div`
 
   @media (min-width: 425px) {
     width: 100%;
-    margin: 75px auto;
   }
   
 `

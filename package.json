@@ -18,7 +18,6 @@
   "engines": {
     "node": ">=18"
   },
-
   "main": "./dist/smart-modal-hrnet.cjs",
   "module": "./dist/smart-modal-hrnet.es.js",
   "exports": {
@@ -27,30 +26,30 @@
       "require": "./dist/smart-modal-hrnet.cjs"
     }
   },
-
   "files": [
     "dist",
     "README.md",
     "LICENSE"
   ],
-
   "scripts": {
     "build": "vite build",
     "dev": "vite",
     "preview": "vite preview"
   },
-
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0",
     "styled-components": "^6.0.0"
   },
-
   "devDependencies": {
     "@vitejs/plugin-react": "^4.7.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "styled-components": "^6.1.19",
     "vite": "^7.1.0"
+  },
+  "dependencies": {
+    "react-router-dom": "^7.11.0",
+    "smart-modal-hrnet": "^1.0.0"
   }
 }

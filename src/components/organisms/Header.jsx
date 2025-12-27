@@ -62,7 +62,7 @@ const Nav = styled.nav`
   a {
     color: #f9f9f9;
     font-weight: 500;
-    border-radius: 10px;
+    border-radius: 0.5rem;
     background-color: #1b453d;
     padding: 10px 20px;
     font-size: 12px;
