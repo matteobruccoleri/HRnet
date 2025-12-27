@@ -1,5 +1,5 @@
 import Input from "../atoms/Input";
-import Dropdown from "../atoms/Dropdown";
+import Dropdown from "../molecules/Dropdown";
 import styled from "styled-components";
 
 const STATES = [
