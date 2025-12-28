@@ -2,10 +2,10 @@ import { useState } from "react";
 import Input from "../atoms/Input";
 import Dropdown from "../molecules/Dropdown";
 import AddressFieldset from "../molecules/AddressFieldset";
-import Modal from "../Modal";
-//import { Modal } from "smart-modal-hrnet";
+//import Modal from "../Modal";
+import { Modal } from "@matteob10/modal-react";
 import Button from "../atoms/Button";
-import { useEmployeesDispatch } from "../../state/EmployeesStore";
+import { useEmployeesActions } from "../../state/EmployeesStore";
 import styled from "styled-components";
 
 const DEPARTMENTS = [
@@ -18,7 +18,7 @@ const DEPARTMENTS = [
 
 export default function EmployeeForm() {
   const [open, setOpen] = useState(false);
-  const dispatch = useEmployeesDispatch();
+  const { addEmployee } = useEmployeesActions();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -41,8 +41,8 @@ export default function EmployeeForm() {
       zipCode: data["zip-code"],
     };
 
-    // Mise à jour du state global via Context+Reducer
-    dispatch({ type: "ADD_EMPLOYEE", payload: employee });
+    // Ajout de l'employé au state global via Context
+    addEmployee(employee);
 
     // UI
     setOpen(true);

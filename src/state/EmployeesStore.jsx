@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
-import { employeesReducer, initialState } from './employeesReducer';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 // --- Configuration de persistance ---
 const STORAGE_KEY = 'employees';
@@ -7,7 +6,7 @@ const STORAGE_VERSION = 1;
 
 // --- Contexts séparés ---
 const EmployeesStateContext = createContext(null);
-const EmployeesDispatchContext = createContext(null);
+const EmployeesActionsContext = createContext(null);
 
 // --- Fonctions utilitaires ---
 function safeParse(json) {
@@ -41,7 +40,7 @@ function generateFakeEmployees(count = 1000) {
 }
 
 // --- Initialisation depuis localStorage (ou génération par défaut) ---
-function initFromStorage() {
+function loadFromStorage() {
   const raw = typeof window !== 'undefined' ? window.localStorage.getItem(STORAGE_KEY) : null;
   const parsed = raw ? safeParse(raw) : null;
 
@@ -50,24 +49,22 @@ function initFromStorage() {
     : validateEmployees(parsed);
 
   // S'il n'y a aucun employé enregistré → on crée 1000 employés de test
-  const employees = ok.length > 0 ? ok : generateFakeEmployees(1000);
-
-  return { ...initialState, employees };
+  return ok.length > 0 ? ok : generateFakeEmployees(1000);
 }
 
 // --- Provider principal ---
 export function EmployeesProvider({ children }) {
-  const [state, dispatch] = useReducer(employeesReducer, initialState, initFromStorage);
+  const [employees, setEmployees] = useState(loadFromStorage);
 
   // Persistance locale
   useEffect(() => {
     try {
-      const payload = { version: STORAGE_VERSION, data: state.employees };
+      const payload = { version: STORAGE_VERSION, data: employees };
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     } catch {
       // Ignore les erreurs JSON ou quota
     }
-  }, [state.employees]);
+  }, [employees]);
 
   // Synchronisation multi-onglets
   useEffect(() => {
@@ -78,44 +75,50 @@ export function EmployeesProvider({ children }) {
         ? validateEmployees(parsed.data)
         : validateEmployees(parsed);
 
-      const sameLength = next.length === state.employees.length;
+      const sameLength = next.length === employees.length;
       const sameIds =
         sameLength &&
-        next.every((n, i) => n.id === state.employees[i]?.id);
+        next.every((n, i) => n.id === employees[i]?.id);
 
       if (!sameIds) {
-        dispatch({ type: 'REPLACE_ALL_EMPLOYEES', payload: next });
+        setEmployees(next);
       }
     }
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.employees]);
+  }, [employees]);
 
-  const stateValue = useMemo(() => state, [state]);
+  // Actions simples pour manipuler les employés
+  const actions = useMemo(() => ({
+    addEmployee: (employee) => {
+      setEmployees((prev) => [...prev, employee]);
+    },
+    deleteEmployee: (id) => {
+      setEmployees((prev) => prev.filter((e) => e.id !== id));
+    },
+    editEmployee: (id, data) => {
+      setEmployees((prev) => prev.map((e) => (e.id === id ? { ...e, ...data } : e)));
+    },
+  }), []);
 
   return (
-    <EmployeesStateContext.Provider value={stateValue}>
-      <EmployeesDispatchContext.Provider value={dispatch}>
+    <EmployeesStateContext.Provider value={employees}>
+      <EmployeesActionsContext.Provider value={actions}>
         {children}
-      </EmployeesDispatchContext.Provider>
+      </EmployeesActionsContext.Provider>
     </EmployeesStateContext.Provider>
   );
 }
 
 // --- Hooks ergonomiques ---
-export function useEmployeesState() {
-  const ctx = useContext(EmployeesStateContext);
-  if (ctx === null) throw new Error('useEmployeesState must be used within EmployeesProvider');
-  return ctx;
-}
-
-export function useEmployeesDispatch() {
-  const ctx = useContext(EmployeesDispatchContext);
-  if (ctx === null) throw new Error('useEmployeesDispatch must be used within EmployeesProvider');
-  return ctx;
-}
-
 export function useEmployees() {
-  return useEmployeesState().employees;
+  const ctx = useContext(EmployeesStateContext);
+  if (ctx === null) throw new Error('useEmployees must be used within EmployeesProvider');
+  return ctx;
+}
+
+export function useEmployeesActions() {
+  const ctx = useContext(EmployeesActionsContext);
+  if (ctx === null) throw new Error('useEmployeesActions must be used within EmployeesProvider');
+  return ctx;
 }
