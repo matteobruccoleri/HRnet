@@ -16,6 +16,7 @@ const StyledButton = styled.button`
   color: #fff;
   transition: all 0.2s ease;
   transform: translateY(0);
+  flex: 1 0 0;
 
     &:hover {
       background-color: #046961;

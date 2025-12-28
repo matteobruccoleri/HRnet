@@ -102,42 +102,32 @@ function EmployeeList() {
           <thead>
             <tr>
               {COLUMNS.map((c) => (
-                <th
+                <StyledTableHeader
                   key={c.key}
                   onClick={() => toggleSort(c.key)}
-                  style={{
-                    cursor: "pointer",
-                    userSelect: "none",
-                    textAlign: "left",
-                    padding: "8px",
-                    borderBottom: "1px solid #ccc",
-                  }}
                 >
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  <HeaderContent>
                     <strong>{c.label}</strong>
-                    <span style={{ opacity: 0.6 }}>{sortIndicator(c.key)}</span>
-                  </span>
-                </th>
+                    <SortIndicator>{sortIndicator(c.key)}</SortIndicator>
+                  </HeaderContent>
+                </StyledTableHeader>
               ))}
             </tr>
           </thead>
           <tbody>
             {pageRows.length === 0 ? (
               <tr>
-                <td colSpan={COLUMNS.length} style={{ padding: 12, textAlign: "center" }}>
+                <EmptyCell colSpan={COLUMNS.length}>
                   No data available in table
-                </td>
+                </EmptyCell>
               </tr>
             ) : (
               pageRows.map((e, i) => (
                 <tr key={e.id ?? i}>
                   {COLUMNS.map((c) => (
-                    <td
-                      key={c.key}
-                      style={{ padding: "8px", borderBottom: "1px solid #eee" }}
-                    >
+                    <StyledTableCell key={c.key}>
                       {e[c.key]}
-                    </td>
+                    </StyledTableCell>
                   ))}
                 </tr>
               ))
@@ -165,27 +155,23 @@ function EmployeeList() {
           >
             Previous
           </Button>
-
-          {getSmartPages(currentPage, totalPages).map((item, i) => {
-            const isNumber = typeof item === "number";
-            const isActive = isNumber && item === currentPage;
-            return (
-              <span
-                key={`${item}-${i}`}
-                onClick={() => isNumber && setPage(item)}
-                style={{
-                  fontWeight: isActive ? "bold" : "normal",
-                  color: isActive ? "#3b8e00" : "#ccc",
-                  cursor: isNumber ? "pointer" : "default",
-                  padding: "2px 6px",
-                  userSelect: "none",
-                }}
-                aria-current={isActive ? "page" : undefined}
-              >
-                {item}
-              </span>
-            );
-          })}
+            <PageNumberWrapper>
+            {getSmartPages(currentPage, totalPages).map((item, i) => {
+              const isNumber = typeof item === "number";
+              const isActive = isNumber && item === currentPage;
+              return (
+                <PageNumber
+                  key={`${item}-${i}`}
+                  onClick={() => isNumber && setPage(item)}
+                  $isActive={isActive}
+                  $isClickable={isNumber}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {item}
+                </PageNumber>
+              );
+            })}
+          </PageNumberWrapper>
 
           <Button
             type="button"
@@ -267,5 +253,61 @@ const StyledShow = styled.div`
 const StyledPagination = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;  
+  gap: 5px;
+  flex-wrap: wrap;
+
+  @media (min-width: 425px) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }  
+`;
+
+const StyledTableHeader = styled.th`
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+`;
+
+const HeaderContent = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+const SortIndicator = styled.span`
+  opacity: 0.6;
+`;
+
+const StyledTableCell = styled.td`
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+`;
+
+const EmptyCell = styled.td`
+  padding: 12px;
+  text-align: center;
+`;
+
+const PageNumberWrapper = styled.div `
+    order: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+
+    @media (min-width: 425px) {
+      order: initial;
+      width: auto;
+    }  
 `
+
+const PageNumber = styled.span`
+  font-weight: ${props => props.$isActive ? 'bold' : 'normal'};
+  color: ${props => props.$isActive ? '#3b8e00' : '#ccc'};
+  cursor: ${props => props.$isClickable ? 'pointer' : 'default'};
+  padding: 2px;
+  user-select: none;
+`;
