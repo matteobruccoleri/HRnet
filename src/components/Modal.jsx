@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const CloseIcon = () => (
@@ -21,25 +22,20 @@ export default function Modal({ open, onClose, children }) {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    if (open && !dialog.open) {
-      dialog.showModal();
-    }
-
-    if (!open && dialog.open) {
-      dialog.close();
-    }
+    if (open && !dialog.open) dialog.showModal();
+    if (!open && dialog.open) dialog.close();
   }, [open]);
 
   return (
     <StyledDialog
       ref={dialogRef}
       onCancel={(e) => {
-        e.preventDefault(); // Escape
+        e.preventDefault(); // fermeture via Escape
         onClose();
       }}
       onMouseDown={(e) => {
         if (e.target === dialogRef.current) {
-          onClose(); // clic backdrop
+          onClose(); // clic sur le backdrop
         }
       }}
     >
@@ -52,35 +48,52 @@ export default function Modal({ open, onClose, children }) {
   );
 }
 
+/* ===== PropTypes ===== */
 
-//Styles Components
+Modal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
+/* ===== Styles ===== */
+
 const StyledDialog = styled.dialog`
   position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 999;
-  border: none;
+  border: 1px solid #e1e1e1;
   border-radius: 10px;
   padding: 16px;
   width: 400px;
-  max-width: calc(100vw - 32px);
+  max-width: calc(100vw - 5%);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
 
   &::backdrop {
     background: rgba(0, 0, 0, 0.45);
   }
-`
+`;
 
 const CloseButton = styled.button`
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: none;
   background: transparent;
   cursor: pointer;
-  padding: 4px;
-  line-height: 0;
-  color: #7e7e7eff;
+  padding: 5px;
+  color: #b3b3b3;
+  border-radius: 0.4rem;
+  transition: 0.2s ease;
+
+  svg {
+    vertical-align: middle;
+  }
 
   &:hover {
-    opacity: 0.7;
+    background: #ebebeb;
+    color: #a1a1a1;
   }
-`
+`;

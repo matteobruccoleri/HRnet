@@ -3,10 +3,9 @@ import Input from "../atoms/Input";
 import Dropdown from "../molecules/Dropdown";
 import AddressFieldset from "../molecules/AddressFieldset";
 import Modal from "../Modal";
-//import { SmartModal } from "smart-modal-hrnet";
+//import { Modal } from "smart-modal-hrnet";
 import Button from "../atoms/Button";
 import { useEmployeesDispatch } from "../../state/EmployeesStore";
-import icon from "../../assets/user.svg";
 import styled from "styled-components";
 
 const DEPARTMENTS = [
@@ -71,7 +70,6 @@ export default function EmployeeForm() {
 
       <Modal open={open} onClose={() => setOpen(false)}>
         <Message>
-          <Icon src={icon} alt="User icon" />
           Employee Created!
         </Message>
       </Modal>
