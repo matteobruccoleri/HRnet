@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Search from "../components/molecules/Search";
 import { useEmployees } from "../state/EmployeesStore";
 import { useEmployeesTable } from "../features/useEmployeeTable";
-import Button from "../components/atoms/Button";
+import PaginationControls from "../components/molecules/PaginationControls";
 
 const COLUMNS = [
   { key: "firstName", label: "First Name" },
@@ -17,21 +17,6 @@ const COLUMNS = [
   { key: "state", label: "State" },
   { key: "zipCode", label: "Zip Code" },
 ];
-
-// Pagination "intelligente" :
-// - Page 1..3 => [1,2,3,4,"…",total]
-// - Page >=4 et <= total-3 => [1,"…",p-1,p,p+1,"…",total]
-// - Dernières pages => [1,"…",total-3,total-2,total-1,total]
-function getSmartPages(current, total) {
-  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
-
-  if (current <= 3) return [1, 2, 3, 4, "…", total];
-
-  if (current >= total - 2)
-    return [1, "…", total - 3, total - 2, total - 1, total];
-
-  return [1, "…", current - 1, current, current + 1, "…", total];
-}
 
 function EmployeeList() {
   const employees = useEmployees();
@@ -136,52 +121,14 @@ function EmployeeList() {
         </StyledTable>
       </TableContainer>
 
-      <StyledPaginationWrapper>
-        <div>
-          {total === 0
-            ? "Showing 0 to 0 of 0 entries"
-            : `Showing ${startIndex + 1} to ${Math.min(
-                startIndex + pageSize,
-                total
-              )} of ${total} entries`}
-        </div>
-
-        {/* --- pagination --- */}
-        <StyledPagination>
-          <Button
-            type="button"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </Button>
-            <PageNumberWrapper>
-            {getSmartPages(currentPage, totalPages).map((item, i) => {
-              const isNumber = typeof item === "number";
-              const isActive = isNumber && item === currentPage;
-              return (
-                <PageNumber
-                  key={`${item}-${i}`}
-                  onClick={() => isNumber && setPage(item)}
-                  $isActive={isActive}
-                  $isClickable={isNumber}
-                  aria-current={isActive ? "page" : undefined}
-                >
-                  {item}
-                </PageNumber>
-              );
-            })}
-          </PageNumberWrapper>
-
-          <Button
-            type="button"
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </Button>
-        </StyledPagination>
-      </StyledPaginationWrapper>
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        total={total}
+        startIndex={startIndex}
+        pageSize={pageSize}
+        onPageChange={setPage}
+      />
     </StyledEmployeeList>
   );
 }
@@ -215,19 +162,6 @@ const StyledTable = styled.table`
   }
 `;
 
-const StyledPaginationWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-`
 const StyledShowAndSearch = styled.div`
   display: flex;
   flex-direction: column;
@@ -247,19 +181,7 @@ const StyledShowAndSearch = styled.div`
 const StyledShow = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;  
-`
-
-const StyledPagination = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  flex-wrap: wrap;
-
-  @media (min-width: 425px) {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }  
+  gap: 8px;
 `;
 
 const StyledTableHeader = styled.th`
@@ -288,26 +210,4 @@ const StyledTableCell = styled.td`
 const EmptyCell = styled.td`
   padding: 12px;
   text-align: center;
-`;
-
-const PageNumberWrapper = styled.div `
-    order: -1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    width: 100%;
-
-    @media (min-width: 425px) {
-      order: initial;
-      width: auto;
-    }  
-`
-
-const PageNumber = styled.span`
-  font-weight: ${props => props.$isActive ? 'bold' : 'normal'};
-  color: ${props => props.$isActive ? '#3b8e00' : '#ccc'};
-  cursor: ${props => props.$isClickable ? 'pointer' : 'default'};
-  padding: 2px;
-  user-select: none;
 `;

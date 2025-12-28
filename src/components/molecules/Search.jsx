@@ -25,7 +25,7 @@ export default Search;
 
 const StyledInput = styled.input`
   width: 100%;
-  padding: 6px;
+  padding: 10px;
   border-radius: 0.5rem;
   border: 1px solid #00000044;
 
