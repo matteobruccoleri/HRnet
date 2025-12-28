@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 function Dropdown({ label, id, options = [], required = true }) {
   return (
@@ -15,6 +16,22 @@ function Dropdown({ label, id, options = [], required = true }) {
     </Field>
   );
 }
+
+Dropdown.propTypes = {
+  label: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        value: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
+      }),
+    ])
+  ),
+  required: PropTypes.bool,
+};
+
 export default Dropdown;
 
 const Field = styled.div`

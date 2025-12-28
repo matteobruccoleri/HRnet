@@ -1,5 +1,5 @@
 {
-  "name": "smart-modal-hrnet",
+  "name": "hrnet",
   "private": false,
   "version": "1.0.0",
   "type": "module",
@@ -49,7 +49,7 @@
     "vite": "^7.1.0"
   },
   "dependencies": {
-    "@matteob10/modal-react": "^1.0.0",
+    "@matteob10/modal-react": "^1.0.1",
     "prop-types": "^15.8.1",
     "react-router-dom": "^7.11.0",
     "smart-modal-hrnet": "^1.0.0"

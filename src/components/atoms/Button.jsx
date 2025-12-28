@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const StyledButton = styled.button`
   display: inline-flex;
@@ -39,5 +40,12 @@ function Button({ children, ...props }) {
     </StyledButton>
   );
 }
+
+Button.propTypes = {
+  children: PropTypes.node,
+  type: PropTypes.oneOf(["button", "submit", "reset"]),
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+};
 
 export default Button;

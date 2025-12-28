@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 function Input({ label, id, type = "text", required = true, ...props }) {
   return (
@@ -8,6 +9,13 @@ function Input({ label, id, type = "text", required = true, ...props }) {
     </Field>
   );
 }
+
+Input.propTypes = {
+  label: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  required: PropTypes.bool,
+};
 
 export default Input;
 

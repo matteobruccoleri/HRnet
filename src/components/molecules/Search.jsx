@@ -1,9 +1,7 @@
 import styled from "styled-components";
-import Input from "../atoms/Input";
+import PropTypes from "prop-types";
 
-
-
-function SearchInput({ value, onChange, placeholder = "Search…" }) {
+function Search({ value, onChange, placeholder = "Search…" }) {
   return (
       <StyledInput
         type="search"
@@ -15,7 +13,13 @@ function SearchInput({ value, onChange, placeholder = "Search…" }) {
   );
 }
 
-export default SearchInput;
+Search.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
+
+export default Search;
 
 // Styled components
 
