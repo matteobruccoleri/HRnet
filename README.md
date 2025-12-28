@@ -1,12 +1,36 @@
-# React + Vite
+# HRnet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Une application web interne moderne pour gérer les dossiers des employés d'une entreprise. Cette application React permet de créer de nouveaux employés et de consulter la liste complète du personnel avec des fonctionnalités de recherche, tri et pagination.
 
-Currently, two official plugins are available:
+## Technologies utilisées
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** - Bibliothèque JavaScript pour l'interface utilisateur
+- **React Router DOM** - Gestion du routing
+- **styled-components** - Styling CSS-in-JS
+- **Vite** - Build tool et serveur de développement
+- **smart-modal-hrnet** - Composant modal personnalisé
 
-## Expanding the ESLint configuration
+## Prérequis
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js >= 18
+- npm >= 10
+
+## Installation
+
+1. Clonez le repository :
+```bash
+git clone https://github.com/matteobruccoleri/HRnet.git
+cd HRnet
+```
+
+2. Installez les dépendances :
+```bash
+npm install
+```
+
+### Développement
+
+Lancez le serveur de développement :
+```bash
+npm run dev
+```

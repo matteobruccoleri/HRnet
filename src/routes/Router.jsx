@@ -1,14 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../App'
-import CreateEmployee from '../pages/CreateEmployee'
+import Home from '../pages/Home'
 import EmployeeList from '../pages/EmployeeList'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,                 // layout
+    element: <App />,
     children: [
-      { index: true, element: <CreateEmployee /> },   // équivaut à path: '/'
+      { index: true, element: <Home /> },
       { path: 'employees', element: <EmployeeList /> }
     ],
   },

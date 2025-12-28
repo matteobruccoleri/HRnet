@@ -1,31 +1,57 @@
 {
   "name": "hrnet",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
+  "description": "React modal/toast component with fade+scale animation, backdrop click, Escape handling and flexible positioning (styled-components).",
+  "keywords": [
+    "react",
+    "modal",
+    "dialog",
+    "toast",
+    "styled-components",
+    "overlay",
+    "hrnet"
+  ],
+  "author": "HRnet Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./dist/smart-modal-hrnet.cjs",
+  "module": "./dist/smart-modal-hrnet.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/smart-modal-hrnet.es.js",
+      "require": "./dist/smart-modal-hrnet.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "dev": "vite",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "@reduxjs/toolkit": "^2.8.2",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-redux": "^9.2.0",
-    "react-router-dom": "^7.8.2",
-    "styled-components": "^6.1.19"
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "styled-components": "^6.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.32.0",
-    "@types/react": "^19.1.9",
-    "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.7.0",
-    "eslint": "^9.32.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.3.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "styled-components": "^6.1.19",
     "vite": "^7.1.0"
+  },
+  "dependencies": {
+    "@matteob10/modal-react": "^1.0.1",
+    "prop-types": "^15.8.1",
+    "react-router-dom": "^7.11.0",
+    "smart-modal-hrnet": "^1.0.0"
   }
 }

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
-import Header  from "./components/Header";
+import Header  from "./components/organisms/Header";
 
 function App() {
 
@@ -17,7 +17,9 @@ function App() {
 }
 
 const Main = styled.main `
-  background-color: #EFEFEF;
+  background-color: #F7FBFF;
+  width: 100%;
+  padding: 5%;
 `
 
 export default App
