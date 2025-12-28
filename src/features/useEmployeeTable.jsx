@@ -1,22 +1,10 @@
 import { useMemo } from "react";
 
-/**
- * Hook pour gérer filtre, tri et pagination d'une liste d'employés.
- *
- * @param {Array<object>} employees - Liste complète (source de vérité)
- * @param {object} opts
- * @param {string}   opts.search   - Terme de recherche (toutes colonnes)
- * @param {string}   opts.sortKey  - Clé de tri (ex: 'firstName')
- * @param {'asc'|'desc'} opts.sortDir - Direction du tri
- * @param {number}   opts.page     - Numéro de page (1-based)
- * @param {number}   opts.pageSize - Taille de page
- *
- * @returns {object} { rows, total, totalPages, currentPage, startIndex }
- */
 export function useEmployeesTable(
   employees,
   { search, sortKey, sortDir, page, pageSize }
 ) {
+  // Filtrage par recherche textuelle
   const filtered = useMemo(() => {
     const q = (search ?? "").trim().toLowerCase();
     if (!q) return employees;
@@ -26,6 +14,7 @@ export function useEmployeesTable(
     );
   }, [employees, search]);
 
+  // Tri des résultats
   const sorted = useMemo(() => {
     if (!sortKey) return filtered;
     const dir = sortDir === "desc" ? -1 : 1;
@@ -39,11 +28,13 @@ export function useEmployeesTable(
     });
   }, [filtered, sortKey, sortDir]);
 
+  // Calcul de la pagination
   const total = sorted.length;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
   const currentPage = Math.min(Math.max(1, page), totalPages);
   const startIndex = (currentPage - 1) * pageSize;
 
+  // Extraction de la page courante
   const rows = useMemo(
     () => sorted.slice(startIndex, startIndex + pageSize),
     [sorted, startIndex, pageSize]
