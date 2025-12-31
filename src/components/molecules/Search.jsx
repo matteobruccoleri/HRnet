@@ -36,6 +36,6 @@ const SearchWrapper = styled.div`
   }
 
   input {
-    border-radius: 0.8rem;
+    border-radius: 0.7rem;
   }
 `;

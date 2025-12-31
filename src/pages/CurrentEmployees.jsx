@@ -151,11 +151,14 @@ const TableContainer = styled.div`
 
 const StyledTable = styled.table`
   border: 1px solid #d9d9d9;
-  border-radius: 1rem;
-  padding: 10px;
+  border-radius: 0.8rem;
+  padding: 0;
   width: 1280px;
   background-color: #ffffff;
-  width: 1280px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
 
   @media (min-width: 1280px) {
     width: 100%;
@@ -188,8 +191,25 @@ const StyledTableHeader = styled.th`
   cursor: pointer;
   user-select: none;
   text-align: left;
-  padding: 8px;
-  border-bottom: 1px solid #ccc;
+  text-align: center;
+  padding: 12px;
+  border-bottom: 2px solid #e5e7eb;
+  background-color: #efefefff;
+  font-weight: 600;
+  color: #374151;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #e2e2e2ff;
+  }
+
+  &:first-child {
+    border-top-left-radius: 0.75rem;
+  }
+
+  &:last-child {
+    border-top-right-radius: 0.75rem;
+  }
 `;
 
 const HeaderContent = styled.span`
@@ -199,15 +219,28 @@ const HeaderContent = styled.span`
 `;
 
 const SortIndicator = styled.span`
-  opacity: 0.6;
+  opacity: 0.5;
+  font-size: 1.1em;
+  color: #6b7280;
+  transition: all 0.2s ease;
 `;
 
 const StyledTableCell = styled.td`
-  padding: 8px;
-  border-bottom: 1px solid #eee;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #1f2937;
+
+  tr:hover & {
+    background-color: #f6f6f6;
+  }
+
+  tr:last-child & {
+    border-bottom: none;
+  }
 `;
 
 const EmptyCell = styled.td`
-  padding: 12px;
+  padding: 32px 12px;
   text-align: center;
+  color: #6b7280;
 `;
