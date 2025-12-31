@@ -13,8 +13,10 @@
     "@matteob10/modal-react": "^1.0.1",
     "prop-types": "^15.8.1",
     "react": "^19.1.1",
+    "react-datepicker": "^9.1.0",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.11.0",
+    "react-select": "^5.10.2",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
