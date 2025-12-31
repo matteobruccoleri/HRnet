@@ -13,7 +13,7 @@ export default Title;
 
 const StyledTitle = styled.h1`
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 500;
   color: #046961;
 `;

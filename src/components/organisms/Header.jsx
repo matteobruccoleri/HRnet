@@ -39,7 +39,7 @@ const StyledHeader = styled.header`
 
   a {
     font-size: 14px;
-    color: #1b453d;
+    color: #046961;
     font-weight: 500;
     display: flex;
     justify-content: center;
@@ -55,7 +55,7 @@ const StyledHeader = styled.header`
 `;
 
 const Logo = styled.img`
-  height: 40px;
+  height: 50px;
 `;
 
 const Nav = styled.nav`
@@ -63,7 +63,7 @@ const Nav = styled.nav`
     color: #f9f9f9;
     font-weight: 500;
     border-radius: 0.5rem;
-    background-color: #1b453d;
+    background-color: #046961;
     padding: 10px 20px;
     font-size: 12px;
     transition: 0.2s ease-out;
@@ -75,7 +75,7 @@ const Nav = styled.nav`
   }
   a:hover {
     transform: translateY(-2px);
-    background-color: #046961;
+    background-color: #067b72ff;
   }
 `;
 

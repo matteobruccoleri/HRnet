@@ -1,6 +1,17 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import Button from "../atoms/Button";
+
+const ArrowLeftIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M15 18l-6-6 6-6"/>
+  </svg>
+);
+
+const ArrowRightIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 18l6-6-6-6"/>
+  </svg>
+);
 
 // Pagination "intelligente" :
 // - Page 1..3 => [1,2,3,4,"…",total]
@@ -28,22 +39,17 @@ function PaginationControls({
   return (
     <PaginationWrapper>
       <EntriesInfo>
-        {total === 0
-          ? "Showing 0 to 0 of 0 entries"
-          : `Showing ${startIndex + 1} to ${Math.min(
-              startIndex + pageSize,
-              total
-            )} of ${total} entries`}
+        Showing {total === 0 ? 0 : startIndex + 1} to {total === 0 ? 0 : Math.min(startIndex + pageSize, total)} of {total} entries
       </EntriesInfo>
 
       <PaginationNav>
-        <Button
+        <PaginationButton
           type="button"
           onClick={() => onPageChange(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
         >
-          Previous
-        </Button>
+          <ArrowLeftIcon />
+        </PaginationButton>
 
         <PageNumberWrapper>
           {getSmartPages(currentPage, totalPages).map((item, i) => {
@@ -63,13 +69,13 @@ function PaginationControls({
           })}
         </PageNumberWrapper>
 
-        <Button
+        <PaginationButton
           type="button"
           onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage === totalPages}
         >
-          Next
-        </Button>
+          <ArrowRightIcon />
+        </PaginationButton>
       </PaginationNav>
     </PaginationWrapper>
   );
@@ -94,8 +100,6 @@ const PaginationWrapper = styled.div`
   align-items: center;
 
   @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
     gap: 25px;
     margin-top: 10px;
   }
@@ -111,9 +115,9 @@ const PaginationNav = styled.div`
   align-items: center;
   gap: 5px;
   flex-wrap: wrap;
+  justify-content: center;
 
   @media (min-width: 425px) {
-    flex-direction: row;
     flex-wrap: nowrap;
   }
 `;
@@ -133,9 +137,39 @@ const PageNumberWrapper = styled.div`
 `;
 
 const PageNumber = styled.span`
-  font-weight: ${props => props.$isActive ? 'bold' : 'normal'};
-  color: ${props => props.$isActive ? '#3b8e00' : '#ccc'};
-  cursor: ${props => props.$isClickable ? 'pointer' : 'default'};
   padding: 2px;
   user-select: none;
+  font-weight: ${({ $isActive }) => $isActive ? 'bold' : 'normal'};
+  color: ${({ $isActive }) => $isActive ? '#3b8e00' : '#ccc'};
+  cursor: ${({ $isClickable }) => $isClickable ? 'pointer' : 'default'};
+`;
+
+const PaginationButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 0.4rem;
+  border: 1px solid #e0e0e0;
+  background: #f5f5f5;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: #e8e8e8;
+    border-color: #d0d0d0;
+  }
+
+  &:disabled {
+    background: #fafafa;
+    color: #ccc;
+    border-color: #f0f0f0;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  svg {
+    display: block;
+  }
 `;

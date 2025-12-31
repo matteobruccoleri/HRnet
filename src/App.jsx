@@ -17,9 +17,9 @@ function App() {
 }
 
 const Main = styled.main `
-  background-color: #F6F8FA;
   width: 100%;
   padding: 5%;
+  height: 100%;
 `
 
 export default App;

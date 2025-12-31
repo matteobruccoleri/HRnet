@@ -1,17 +1,13 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-function Input({ label, id, type = "text", required = true, ...props }) {
+function Input({id, type = "text", required = true, ...props }) {
   return (
-    <Field>
-      {label && <label htmlFor={id}>{label}</label>}
-      <input id={id} name={id} type={type} required={required} {...props} />
-    </Field>
+      <StyledInput id={id} name={id} type={type} required={required} {...props} />
   );
 }
 
 Input.propTypes = {
-  label: PropTypes.string,
   id: PropTypes.string.isRequired,
   type: PropTypes.string,
   required: PropTypes.bool,
@@ -19,24 +15,57 @@ Input.propTypes = {
 
 export default Input;
 
-const Field = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+const StyledInput = styled.input`
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 0.6rem;
+  background: #fdfdfd;
+  font-weight: 400;
+  font-size: 1rem;
   width: 100%;
+  color: rgba(0, 0, 0, 0.75);
+  transition: all 0.2s ease;
 
-  label {
-    font-weight: 400;
-    font-size: 1.1rem;
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.38);
   }
 
-  input {
-    padding: 10px;
-    border: 1px solid #d9d9d9;
-    border-radius: 0.6rem;
-    background: #fdfdfd;
-    font-weight: 400;
-    font-size: 1rem;
+  &:hover {
+    border-color: #bfc5c5;
+    background-color: #fff;
+  }
 
+  &:focus {
+    outline: none;
+    border-color: #058b80;
+    box-shadow: 0 0 0 3px rgba(5, 139, 128, 0.15);
+    background-color: #fff;
+  }
+
+  /* Amélioration pour les inputs de type date */
+  &[type="date"] {
+    cursor: pointer;
+    position: relative;
+
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  /* Amélioration pour les inputs de type number */
+  &[type="number"] {
+    -moz-appearance: textfield;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 `;

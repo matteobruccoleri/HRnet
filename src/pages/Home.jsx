@@ -4,12 +4,10 @@ import Title from "../components/atoms/Title";
 
 export default function Home() {
   return (
-    <>
-      <Container>
-        <Title>Create Employee</Title>
-        <EmployeeForm />
-      </Container>
-    </>
+    <Container>
+      <Title>Create Employee</Title>
+      <EmployeeForm />
+    </Container>
   );
 }
 
@@ -18,9 +16,4 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
-
-  @media (min-width: 425px) {
-    width: 100%;
-  }
-  
-`
+`;

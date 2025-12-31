@@ -18,7 +18,7 @@ const COLUMNS = [
   { key: "zipCode", label: "Zip Code" },
 ];
 
-function EmployeeList() {
+function CurrentEmployees() {
   const { employees } = useEmployeesContext();
 
   const [search, setSearch] = useState("");
@@ -48,7 +48,8 @@ function EmployeeList() {
   }
 
   return (
-    <StyledEmployeeList>
+    <EmployeeList>
+
       <Title>Current Employees</Title>
         <Search
           value={search}
@@ -57,7 +58,7 @@ function EmployeeList() {
             setSearch(value);
             setPage(1);
           }}
-        />
+      />
 
       <TableContainer>
         <StyledTable>
@@ -126,13 +127,13 @@ function EmployeeList() {
         pageSize={pageSize}
         onPageChange={setPage}
       />
-    </StyledEmployeeList>
+    </EmployeeList>
   );
 }
 
-export default EmployeeList;
+export default CurrentEmployees;
 
-const StyledEmployeeList = styled.div`
+const EmployeeList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -149,7 +150,7 @@ const TableContainer = styled.div`
 `;
 
 const StyledTable = styled.table`
-  border: 1px solid #e9e9e9;
+  border: 1px solid #d9d9d9;
   border-radius: 1rem;
   padding: 10px;
   width: 1280px;

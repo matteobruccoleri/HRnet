@@ -12,14 +12,14 @@ const StyledButton = styled.button`
   border: none;
   font-weight: 600;
   cursor: pointer;
-  background: #1b453d;
+  background: #046961;
   color: #fff;
   transition: all 0.2s ease;
   transform: translateY(0);
   flex: 1 0 0;
 
     &:hover {
-      background-color: #046961;
+      background-color: #067b72ff;
       transform: translateY(-2px);
     }
 

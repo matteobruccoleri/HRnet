@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../App'
 import Home from '../pages/Home'
-import EmployeeList from '../pages/EmployeeList'
+import CurrentEmployees from '../pages/CurrentEmployees'
 
 export const router = createBrowserRouter([
   {
@@ -9,7 +9,7 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'employees', element: <EmployeeList /> }
+      { path: 'employees', element: <CurrentEmployees /> }
     ],
   },
   // Option : 404
