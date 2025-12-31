@@ -39,10 +39,20 @@ const Field = styled.div`
   flex-direction: column;
   margin-bottom: 12px;
   width: 100%;
+  background: #fdfdfd;
+
+  label {
+    padding-top: 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
 
   select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    padding: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 0.6rem;
+    background-color: #fdfdfd;
+    font-size: 1rem;
+    font-weight: 400;
   }
 `;

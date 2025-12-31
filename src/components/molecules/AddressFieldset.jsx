@@ -24,7 +24,22 @@ export default function AddressFieldset() {
 }
 
 const StyledFieldSet = styled.fieldset`
-  border: 1px solid #cbcbcb;
-  border-radius: 8px;
-  width: 100%; 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: none;
+  width: 100%;
+  padding: 10px 0; 
+
+  legend {
+    padding-top: 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  label {
+    padding-top: 0px;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
 `

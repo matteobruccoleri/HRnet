@@ -7,8 +7,8 @@ const StyledButton = styled.button`
   justify-content: center;
   gap: 6px;
   width: 100%;
-  padding: 10px 20px;
-  border-radius: 0.5rem;
+  padding: 14px 20px;
+  border-radius: 0.6rem;
   border: none;
   font-weight: 600;
   cursor: pointer;

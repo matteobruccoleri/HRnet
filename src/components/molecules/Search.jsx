@@ -26,10 +26,10 @@ export default Search;
 const StyledInput = styled.input`
   width: 100%;
   padding: 10px;
-  border-radius: 0.5rem;
-  border: 1px solid #00000044;
+  border-radius: 1rem;
+  border: 1px solid #e9e9e9;
 
   @media (min-width: 425px) {
-    width: 300px;
+    width: 400px;
   }
 `;

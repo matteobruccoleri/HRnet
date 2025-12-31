@@ -96,7 +96,7 @@ const PaginationWrapper = styled.div`
   @media (min-width: 768px) {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    gap: 25px;
     margin-top: 10px;
   }
 `;

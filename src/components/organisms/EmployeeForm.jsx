@@ -5,7 +5,7 @@ import AddressFieldset from "../molecules/AddressFieldset";
 //import Modal from "../Modal";
 import { Modal } from "@matteob10/modal-react";
 import Button from "../atoms/Button";
-import { useEmployeesActions } from "../../state/EmployeesStore";
+import { useEmployeesContext } from "../../store/EmployeesContext";
 import styled from "styled-components";
 
 const DEPARTMENTS = [
@@ -18,7 +18,7 @@ const DEPARTMENTS = [
 
 export default function EmployeeForm() {
   const [open, setOpen] = useState(false);
-  const { addEmployee } = useEmployeesActions();
+  const { addEmployee } = useEmployeesContext();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -80,17 +80,17 @@ export default function EmployeeForm() {
 const Form = styled.form`
   background-color: #fff;
   border-radius: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #d8d8d8;
   padding: 15px;
   width: 100%;
   box-shadow: 0px 0px 25px 0px rgba(0, 76, 158, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   align-items: end;
 
-  @media (min-width: 425px) {
-    width: 400px;
+  @media (min-width: 475px) {
+    width: 450px;
   }
 `;
 
@@ -103,7 +103,3 @@ const Message = styled.div`
   line-height: 100%;
 `;
 
-const Icon = styled.img`
-  width: 20px;
-  height: 20px;
-`;
