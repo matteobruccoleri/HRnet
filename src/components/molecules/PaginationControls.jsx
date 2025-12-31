@@ -98,11 +98,7 @@ const PaginationWrapper = styled.div`
   flex-direction: column;
   gap: 10px;
   align-items: center;
-
-  @media (min-width: 768px) {
-    gap: 25px;
-    margin-top: 10px;
-  }
+  gap: 10px;
 `;
 
 const EntriesInfo = styled.div`
@@ -140,7 +136,7 @@ const PageNumber = styled.span`
   padding: 2px;
   user-select: none;
   font-weight: ${({ $isActive }) => $isActive ? 'bold' : 'normal'};
-  color: ${({ $isActive }) => $isActive ? '#3b8e00' : '#ccc'};
+  color: ${({ $isActive }) => $isActive ? '#058b80' : '#ccc'};
   cursor: ${({ $isClickable }) => $isClickable ? 'pointer' : 'default'};
 `;
 
@@ -150,21 +146,21 @@ const PaginationButton = styled.button`
   justify-content: center;
   padding: 8px 12px;
   border-radius: 0.4rem;
-  border: 1px solid #e0e0e0;
-  background: #f5f5f5;
+  border: 1px solid #d9d9d9;
+  background: #efefef;
   color: #555;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    background: #e8e8e8;
+    background: #e5e5e5;
     border-color: #d0d0d0;
   }
 
   &:disabled {
-    background: #fafafa;
+    background: #f7f7f7;
     color: #ccc;
-    border-color: #f0f0f0;
+    border-color: #e8e8e8;
     cursor: not-allowed;
     opacity: 0.6;
   }

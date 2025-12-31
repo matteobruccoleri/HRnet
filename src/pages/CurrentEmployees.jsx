@@ -51,15 +51,35 @@ function CurrentEmployees() {
     <EmployeeList>
 
       <Title>Current Employees</Title>
-        <Search
-          value={search}
-          placeholder="Search employees…"
-          onChange={(value) => {
-            setSearch(value);
-            setPage(1);
-          }}
+        <ShowAndSearch>
+          <Show>
+            Show
+            <select
+              id="page-size"
+              name="page-size"
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setPage(1);
+              }}
+            >
+              {[10, 25, 50, 100].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>{" "}
+            entries
+          </Show>
+          <Search
+            value={search}
+            placeholder="Search…"
+            onChange={(value) => {
+              setSearch(value);
+              setPage(1);
+            }}
       />
-
+        </ShowAndSearch>
       <TableContainer>
         <StyledTable>
           <thead>
@@ -98,26 +118,6 @@ function CurrentEmployees() {
           </tbody>
         </StyledTable>
       </TableContainer>
-        <StyledShow>
-          Show
-          <select
-            id="page-size"
-            name="page-size"
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-              setPage(1);
-            }}
-          >
-            {[10, 25, 50, 100].map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>{" "}
-          entries
-        </StyledShow>
-
 
       <PaginationControls
         currentPage={currentPage}
@@ -162,7 +162,7 @@ const StyledTable = styled.table`
   }
 `;
 
-const StyledShowAndSearch = styled.div`
+const ShowAndSearch = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -178,7 +178,7 @@ const StyledShowAndSearch = styled.div`
   }
 `
 
-const StyledShow = styled.div`
+const Show = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
