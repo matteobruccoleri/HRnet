@@ -2,8 +2,8 @@ import { useState } from "react";
 import Title from "../components/atoms/Title";
 import styled from "styled-components";
 import Search from "../components/molecules/Search";
-import { useEmployees } from "../state/EmployeesStore";
-import { useEmployeesTable } from "../features/useEmployeeTable";
+import { useEmployeesContext } from "../store/EmployeesContext";
+import { useEmployeesTable } from "../hooks/useEmployeesTable";
 import PaginationControls from "../components/molecules/PaginationControls";
 
 const COLUMNS = [
@@ -19,7 +19,7 @@ const COLUMNS = [
 ];
 
 function EmployeeList() {
-  const employees = useEmployees();
+  const { employees } = useEmployeesContext();
 
   const [search, setSearch] = useState("");
   const [pageSize, setPageSize] = useState(10);
@@ -50,28 +50,6 @@ function EmployeeList() {
   return (
     <StyledEmployeeList>
       <Title>Current Employees</Title>
-
-      <StyledShowAndSearch>
-        <StyledShow>
-          Show
-          <select
-            id="page-size"
-            name="page-size"
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-              setPage(1);
-            }}
-          >
-            {[10, 25, 50, 100].map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>{" "}
-          entries
-        </StyledShow>
-
         <Search
           value={search}
           placeholder="Search employees…"
@@ -80,7 +58,6 @@ function EmployeeList() {
             setPage(1);
           }}
         />
-      </StyledShowAndSearch>
 
       <TableContainer>
         <StyledTable>
@@ -120,6 +97,26 @@ function EmployeeList() {
           </tbody>
         </StyledTable>
       </TableContainer>
+        <StyledShow>
+          Show
+          <select
+            id="page-size"
+            name="page-size"
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              setPage(1);
+            }}
+          >
+            {[10, 25, 50, 100].map((n) => (
+              <option key={n} value={n}>
+                {n}
+              </option>
+            ))}
+          </select>{" "}
+          entries
+        </StyledShow>
+
 
       <PaginationControls
         currentPage={currentPage}
@@ -152,9 +149,11 @@ const TableContainer = styled.div`
 `;
 
 const StyledTable = styled.table`
-  border: 1px solid #00000044;
-  border-radius: 0.5rem;
+  border: 1px solid #e9e9e9;
+  border-radius: 1rem;
   padding: 10px;
+  width: 1280px;
+  background-color: #ffffff;
   width: 1280px;
 
   @media (min-width: 1280px) {
