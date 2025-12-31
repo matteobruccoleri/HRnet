@@ -1,19 +1,12 @@
 # HRnet
 
-Une application web interne moderne pour gérer les dossiers des employés d'une entreprise. Cette application React permet de créer de nouveaux employés et de consulter la liste complète du personnel avec des fonctionnalités de recherche, tri et pagination.
+HRnet est une application React qui permet de créer de nouveaux employés et de consulter la liste complète des employés avec des fonctionnalités de recherche, tri et pagination.
 
-## Technologies utilisées
+## Technologies
 
-- **React 19** - Bibliothèque JavaScript pour l'interface utilisateur
-- **React Router DOM** - Gestion du routing
-- **styled-components** - Styling CSS-in-JS
-- **Vite** - Build tool et serveur de développement
-- **smart-modal-hrnet** - Composant modal personnalisé
-
-## Prérequis
-
-- Node.js >= 18
-- npm >= 10
+- **React**
+- **Vite** 
+- **styled-components** 
 
 ## Installation
 
