@@ -229,6 +229,7 @@ const StyledTableCell = styled.td`
   padding: 12px 16px;
   border-bottom: 1px solid #f3f4f6;
   color: #1f2937;
+  text-align: center;
 
   tr:hover & {
     background-color: #f6f6f6;
